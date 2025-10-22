@@ -2174,12 +2174,7 @@ void CFFPlayer::Event_Killed( const CTakeDamageInfo &info )
 		m_iWantBuild = FF_BUILD_NONE;
 
 		// Mirv: Cancel build timer
-		CSingleUserRecipientFilter user(this);
-		user.MakeReliable();
-		UserMessageBegin(user, "FF_BuildTimer");
-		WRITE_SHORT(m_iCurBuild);
-		WRITE_FLOAT(0);
-		MessageEnd();
+		SendHudStatusBuildTimer(m_iCurBuild, 0);
 	}
 
 	// If the tag is still active, award a point
@@ -3617,6 +3612,17 @@ void CFFPlayer::Command_BuildManCannon(const CCommand& args)
 //ConVar sg_buildtime("ffdev_sg_buildtime", "7.0", FCVAR_REPLICATED | FCVAR_CHEAT, "Sentry Gun build time");
 #define SG_BUILDTIME 3.0f //sg_buildtime.GetFloat()  //
 
+void CFFPlayer::SendHudStatusBuildTimer(int iBuildType, float flDuration)
+{
+	CSingleUserRecipientFilter user(this);
+	user.MakeReliable();
+
+	UserMessageBegin(user, "FF_BuildTimer");
+		WRITE_SHORT(iBuildType);
+		WRITE_FLOAT(flDuration);
+	MessageEnd();
+}
+
 void CFFPlayer::PreBuildGenericThink( void )
 {
 	//
@@ -3876,12 +3882,7 @@ void CFFPlayer::PreBuildGenericThink( void )
 			}
 
 			// Mirv: Start build timer
-			CSingleUserRecipientFilter user( this );
-			user.MakeReliable();
-			UserMessageBegin( user, "FF_BuildTimer" );
-				WRITE_SHORT( m_iCurBuild );
-				WRITE_FLOAT( m_flBuildTime - gpGlobals->curtime );
-			MessageEnd();
+			SendHudStatusBuildTimer(m_iCurBuild, m_flBuildTime - gpGlobals->curtime);
 		}
 		else
 		{
@@ -3930,12 +3931,7 @@ void CFFPlayer::PreBuildGenericThink( void )
 				UnlockPlayer();
 
 				// Mirv: Cancel build timer
-				CSingleUserRecipientFilter user(this);
-				user.MakeReliable();
-				UserMessageBegin(user, "FF_BuildTimer");
-				WRITE_SHORT(FF_BUILD_NONE);
-				WRITE_FLOAT(0);
-				MessageEnd();
+				SendHudStatusBuildTimer(FF_BUILD_NONE, 0);
 
 				// Re-initialize
 				m_iCurBuild = FF_BUILD_NONE;
@@ -7874,12 +7870,7 @@ void CFFPlayer::SpyStartSabotaging(CFFBuildableObject *pBuildable)
 	else
 		iBuildableType = FF_BUILD_DISPENSER;
 
-	CSingleUserRecipientFilter user(this);
-	user.MakeReliable();
-	UserMessageBegin(user, "FF_BuildTimer");
-	WRITE_SHORT(iBuildableType);
-	WRITE_FLOAT(3.0f);
-	MessageEnd();
+	SendHudStatusBuildTimer(iBuildableType, 3.0f);
 
 	// Now remember what we're sabotaging
 	m_hSabotaging = pBuildable;
@@ -7895,12 +7886,7 @@ void CFFPlayer::SpyStopSabotaging()
 	if (!m_hSabotaging)
 		return;
 
-	CSingleUserRecipientFilter user(this);
-	user.MakeReliable();
-	UserMessageBegin(user, "FF_BuildTimer");
-	WRITE_SHORT(0);
-	WRITE_FLOAT(0);
-	MessageEnd();
+	SendHudStatusBuildTimer(0, 0);
 
 	// Remember that we aren't sabotaging
 	m_hSabotaging = NULL;
