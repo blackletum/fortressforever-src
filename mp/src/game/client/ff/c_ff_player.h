@@ -1,6 +1,6 @@
 //========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -449,7 +449,7 @@ public:
 	virtual void Death();
 
 	// Mirv: In TFC the AbsOrigin is midway up the model. We need to take this into
-	// account for various things. 
+	// account for various things.
 	Vector GetFeetOrigin(void);
 
 	virtual void FireBullets(const FireBulletsInfo_t& info);
@@ -520,7 +520,7 @@ public:
 protected:
 	bool m_bConcussed;
 	// ----------------------------------
-// *** ELMO 
+// *** ELMO
 
 	// ----------------------------------
 
@@ -532,7 +532,7 @@ public:
 protected:
 	bool m_bTranqed;
 	// ----------------------------------
-// *** ELMO 
+// *** ELMO
 
 // SQUEEK ***
 	// ----------------------------------
