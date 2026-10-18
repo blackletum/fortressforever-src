@@ -22,6 +22,9 @@
 #define FF_PLAYER_VIEW_OFFSET	Vector( 0, 0, 53.5 )
 #define EXTRA_LOCAL_ORIGIN_ACCURACY
 
+// Maximum jetpack fuel.
+#define JETPACK_MAXFUEL 200
+
 // Maximum deployed pipebombs per player.
 #define FF_MAX_PIPEBOMBS 6
 
