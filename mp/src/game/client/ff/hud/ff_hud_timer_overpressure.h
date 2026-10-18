@@ -1,0 +1,44 @@
+#ifndef FF_HUD_TIMER_OVERPRESSURE_H
+#define FF_HUD_TIMER_OVERPRESSURE_H
+
+#include "ff_quantitypanel.h"
+#include "hudelement.h"
+#include "hud_macros.h"
+#include "iclientmode.h"
+
+using namespace FFQuantityHelper;
+
+class CHudTimerOverpressure
+	: public CHudElement, public vgui::FFQuantityPanel
+{
+private:
+	DECLARE_CLASS_SIMPLE(CHudTimerOverpressure, vgui::FFQuantityPanel);
+	CHudTimerOverpressure(const char* pElementName);
+	~CHudTimerOverpressure();
+
+	vgui::FFQuantityItem* m_qiTimer;
+	CooldownVisibility m_show = CooldownVisibility::ALWAYS;
+	CooldownVisibility m_showProgress = CooldownVisibility::ALWAYS;
+	bool m_bHideText = false;
+	bool m_bCountDown = false;
+	AmountFormat m_valueFormat = FORMAT_PERCENTAGE;
+	std::wstring m_wsReady = L"Ready";
+	std::wstring m_wsRegenerating = L"Regenerating...";
+
+	void ApplySchemeSettings(vgui::IScheme* pScheme) override;
+	void AddPanelSpecificOptions(KeyValues* kvPanelSpecificOptions) override;
+	KeyValues* GetDefaultStyleData() override;
+	void ApplyStyleData(
+		KeyValues* kvStyleData,
+		KeyValues* kvDefaultStyleData) override;
+	void ApplyVisibilityOptions();
+	void UpdateProgressVisibility();
+	void OnTick() override;
+
+	void Init();
+	void VidInit();
+	bool ShouldDraw() override;
+	void Paint() override;
+};
+
+#endif
