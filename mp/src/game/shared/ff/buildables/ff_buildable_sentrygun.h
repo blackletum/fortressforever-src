@@ -182,6 +182,8 @@ private:
 	bool IsTargetVisible( CBaseEntity *pTarget, int iSightDistance );
 	bool IsTargetClassTValid( Class_T cT ) const;
 
+	void SendHudStatusLevel(bool bZero = false);
+
 public:
 	CBaseEntity *GetEnemy( void	) const { return m_hEnemy; }
 	void SetEnemy( CBaseEntity *hEnemy );
@@ -220,6 +222,7 @@ public:
 	virtual void Sabotage(CFFPlayer *pSaboteur);
 	virtual void MaliciouslySabotage(CFFPlayer *pSaboteur);
 	virtual void Detonate();
+	virtual void RemoveQuietly() override;
 
 	static CFFSentryGun *Create( const Vector &vecOrigin, const QAngle &vecAngles, CBaseEntity *pentOwner = NULL );
 
