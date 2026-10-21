@@ -463,6 +463,7 @@ BEGIN_SEND_TABLE_NOBASE( CFFPlayer, DT_FFLocalPlayerExclusive )
 
 	SendPropFloat(SENDINFO(m_flSlidingTime)),
 	SendPropFloat(SENDINFO(m_flSpeedModifier)),
+	SendPropBool(SENDINFO(m_bAssaultCannonAnchored)),
 	SendPropTime(SENDINFO(m_flNextCloak)),
 
 	SendPropInt( SENDINFO( m_iSpyDisguising ), 4 ),
@@ -629,6 +630,7 @@ CFFPlayer::CFFPlayer()
 	m_flNextAutoDisguise = 0.0f;
 
 	m_flSpeedModifier = 1.0f;
+	m_bAssaultCannonAnchored = false;
 	m_flSpeedModifierOld = 1.0f;
 	m_flSpeedModifierChangeTime = 0;
 
@@ -1607,6 +1609,7 @@ void CFFPlayer::Spawn( void )
 	m_flConcTime		= 0.0f;
 	m_flSlidingTime		= 0.0f;
 	m_flSpeedModifier	= 1.0f;
+	m_bAssaultCannonAnchored = false;
 	m_flNextClassSpecificSkill = 0.0f;
 	m_iJetpackFuel		= 200.0f;
 	m_flJetpackNextFuelRechargeTime = 0.0f;
@@ -5112,6 +5115,8 @@ void CFFPlayer::RecalculateSpeed( void )
 				bAssaultCannonIncluded = true;
 		}
 	}
+
+	m_bAssaultCannonAnchored = bAssaultCannonIncluded;
 
 	// No amount of effects should let you go below 40% speed unless you're firing the AC
 	if( bAssaultCannonIncluded )

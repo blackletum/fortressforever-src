@@ -1068,6 +1068,7 @@ public:
 	CNetworkVar(bool, m_bCanDoubleJump);
 
 	CNetworkVar(float, m_flSpeedModifier);
+	CNetworkVar(bool, m_bAssaultCannonAnchored);
 	float		m_flSpeedModifierOld;
 	float		m_flSpeedModifierChangeTime;
 

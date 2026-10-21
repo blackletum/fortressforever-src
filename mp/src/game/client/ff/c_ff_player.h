@@ -473,6 +473,7 @@ public:
 	virtual		float GetFOV();
 
 	float		m_flSpeedModifier;
+	bool m_bAssaultCannonAnchored;
 
 	int			m_iHallucinationIndex;
 	float		m_flHallucinationFinish;
